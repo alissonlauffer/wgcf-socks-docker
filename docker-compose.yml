@@ -21,23 +21,20 @@ services:
       timeout: 2s
       retries: 10
 
-  dante:
-    image: shturman/dante:1.4.2
+  socks5:
+    image: serjs/go-socks5-proxy
     volumes:
-      - ./sockd.conf:/etc/sockd.conf
       - /etc/localtime:/etc/localtime:ro
     restart: always
-    environment:
-      - CFGFILE=/etc/sockd.conf
     network_mode: "service:wgcf"
     depends_on:
-      wgcf: 
+      wgcf:
         condition: service_healthy
 
   test:
     image: curlimages/curl
     network_mode: "service:wgcf"
     depends_on:
-      wgcf: 
+      wgcf:
         condition: service_healthy
     command: curl ipinfo.io
