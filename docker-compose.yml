@@ -13,7 +13,8 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - "1080:1080"
+      - "[::1]:1080:1080"
+      - "127.0.0.1:1080:1080"
     restart: always
     healthcheck:
       test: curl -fs https://www.cloudflare.com/cdn-cgi/trace | grep -q -E 'warp=(on|plus)' && exit 0 || exit 1
